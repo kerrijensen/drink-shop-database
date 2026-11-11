@@ -7,4 +7,5 @@ SELECT
 FROM CUSTOMER_ORDER cus_ord	
 INNER JOIN CUSTOMER cus ON cus_ord.OrderID = cus.OrderID
 INNER JOIN MENU_ITEM menu ON cus_ord.OrderID = menu.MenuItemID
+WHERE cus_ord.status = 'Pending'
 ORDER BY CONCAT (cus.FirstName, ' ', cus.LastName AS Name, cus_ord.OrderDateTime, menu.Name AS Name, cus_ord.Status;
