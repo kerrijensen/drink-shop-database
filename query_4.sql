@@ -19,22 +19,22 @@ SELECT
             SECOND, co.OrderDateTime, p.PaymentDateTime
         ) > 180
         THEN 1 ELSE 0
-    END) AS LatePayments,
+    END) AS LatePayments, -- greater than 180 sec
 
     SUM(CASE
         WHEN p.PaymentID IS NULL
         THEN 1 ELSE 0
-    END) AS MissingPayments,
+    END) AS MissingPayments, -- no matching payments exists
 
     SUM(CASE
         WHEN p.PaymentDateTime < co.OrderDateTime
         THEN 1 ELSE 0
-    END) AS InvalidPaymentTimes,
+    END) AS InvalidPaymentTimes, -- payment time is earlier than order time
 
     ROUND(
         100.0 * SUM(CASE
             WHEN p.PaymentID IS NOT NULL
-             AND TIMESTAMPDIFF(
+             AND TIMESTAMPDIFF( -- payment time minus order time
                  SECOND, co.OrderDateTime, p.PaymentDateTime
              ) BETWEEN 0 AND 180
             THEN 1 ELSE 0
@@ -50,9 +50,9 @@ INNER JOIN CUSTOMER AS c
 LEFT JOIN PAYMENT AS p
     ON co.OrderID = p.OrderID
 
-WHERE co.Status = 'Completed'
+WHERE co.Status = 'Completed' -- doesn't keep pending or cancelled orders
 
-GROUP BY
+GROUP BY -- one row / employee 
     e.EmployeeID,
     e.FirstName,
     e.LastName
