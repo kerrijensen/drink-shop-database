@@ -14,6 +14,7 @@ WITH CustomerPurchases AS (
     LEFT JOIN ORDER_ITEM AS oi
         ON oi.OrderID = co.OrderID
         AND oi.UnitPrice > 0
+    WHERE c.EmployeeID IS NULL
     GROUP BY c.CustomerID
 ),
 CustomerRewards AS (
