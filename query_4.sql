@@ -57,6 +57,8 @@ GROUP BY -- one row / employee
     e.FirstName,
     e.LastName
 
+HAVING COUNT(*) >= 5
+
 ORDER BY
     WithinTargetPercentage DESC,
     e.EmployeeID;
