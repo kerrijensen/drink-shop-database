@@ -1,11 +1,18 @@
 CREATE OR REPLACE VIEW do_live_order_tracking AS
 SELECT
-	CONCAT (cus.FirstName, ' ', cus.LastName AS Name,
-	cus_ord.Status,
-	cus_ord.OrderDateTime,
-	menu.Name AS Name,
-FROM CUSTOMER_ORDER cus_ord	
-INNER JOIN CUSTOMER cus ON cus_ord.OrderID = cus.OrderID
-INNER JOIN MENU_ITEM menu ON cus_ord.OrderID = menu.MenuItemID
-WHERE cus_ord.status = 'Pending'
-ORDER BY CONCAT (cus.FirstName, ' ', cus.LastName AS Name, cus_ord.OrderDateTime, menu.Name AS Name, cus_ord.Status;
+	co.OrderID,
+	CONCAT (c.FirstName, ' ', c.LastName) AS CustomerName,
+	co.Status,
+	co.OrderDateTime,
+	menu.Name AS DrinkName,
+	oi.Quantity
+FROM CUSTOMER_ORDER AS co
+INNER JOIN CUSTOMER AS c ON co.CustomerID = c.CustomerID
+INNER JOIN ORDER_ITEM AS oi ON co.OrderID = oi.OrderID
+INNER JOIN MENU_ITEM AS menu ON oi.MenuItemID = menu.MenuItemID
+WHERE co.status = 'Pending';
+-- ORDER BY CONCAT (c.FirstName, ' ', c.LastName AS Name, co.OrderDateTime, m.Name AS Name, co.Status;)
+
+SELECT *
+FROM do_live_order_tracking
+ORDER BY OrderDateTime, OrderID, DrinkName;
