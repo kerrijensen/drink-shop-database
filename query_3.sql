@@ -1,3 +1,4 @@
+-- QUERY 3
 SELECT
     DATE(p.PaymentDateTime) AS Pay_Date,
     SUM(p.Amount) AS DailyRevenue,
