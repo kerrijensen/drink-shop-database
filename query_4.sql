@@ -1,3 +1,4 @@
+-- QUERY 4
 -- Project-defined target: payment recorded within 180 seconds. (3 mins)
 -- Measures order-to-payment time, not drink preparation time.
 
@@ -56,8 +57,6 @@ GROUP BY -- one row / employee
     e.EmployeeID,
     e.FirstName,
     e.LastName
-
-HAVING COUNT(*) >= 5
 
 ORDER BY
     WithinTargetPercentage DESC,
