@@ -1,3 +1,4 @@
+-- QUERY 1
 SELECT
     co.OrderID,
     CONCAT(c.FirstName, ' ', c.LastName) AS CustomerName,
