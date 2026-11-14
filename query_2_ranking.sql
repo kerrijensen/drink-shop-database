@@ -1,3 +1,4 @@
+-- QUERY 2
 SELECT
     c.CategoryName,
     m.Name AS DrinkName,
