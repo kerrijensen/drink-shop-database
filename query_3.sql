@@ -1,2 +1,10 @@
-SELECT DATE(P.PaymentDateTime) AS Pay_Date, SUM(P.Amount) AS SUM(SUM(P.Amount)) OVER (ORDER BY DATE(P.PaymentDateTime) AS cumulative_rev
-FROM PAYMENT P GROUP BY DATE(P.PaymentDateTime);
+SELECT
+    DATE(p.PaymentDateTime) AS Pay_Date,
+    SUM(p.Amount) AS DailyRevenue,
+    SUM(SUM(p.Amount)) OVER (
+        ORDER BY DATE(p.PaymentDateTime)
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS CumulativeRevenue
+FROM PAYMENT AS p
+GROUP BY DATE(p.PaymentDateTime)
+ORDER BY Pay_Date;
