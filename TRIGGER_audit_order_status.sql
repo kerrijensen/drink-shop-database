@@ -6,11 +6,13 @@ CREATE TABLE IF NOT EXISTS ORDER_STATUS_AUDIT (
     ChangedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB;
 
+-- Remove the earlier version so each status change is logged once.
 DROP TRIGGER IF EXISTS we_like_money;
+DROP TRIGGER IF EXISTS audit_order_status;
 
 DELIMITER $$
 
-CREATE TRIGGER we_like_money
+CREATE TRIGGER audit_order_status
 AFTER UPDATE ON CUSTOMER_ORDER
 FOR EACH ROW
 BEGIN
@@ -21,7 +23,6 @@ BEGIN
 END$$
 
 DELIMITER ;
-
 
 -- CREATE TRIGGER we_like_money
 -- on DATABASE
