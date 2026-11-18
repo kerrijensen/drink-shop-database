@@ -2,7 +2,7 @@ CREATE TRIGGER active_order
 ON EMPLOYEE
 WHILE CUSTOMER_ORDER.Status = "Pending"
 WHERE CUSTOMER_ORDER.EmployeeID = EMPLOYEE.EmployeeID
-FOR DELETE
+BEFORE DELETE
 AS
 BEGIN
 	"This employee is creating an order. Please do not fire them.";
